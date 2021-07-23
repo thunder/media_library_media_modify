@@ -1,0 +1,6 @@
+name: Entity Reference Override
+description: 'Store context specific overrides for entity reference fields.'
+type: module
+package: User interface
+core_version_requirement: ^8.9 || ^9
+
