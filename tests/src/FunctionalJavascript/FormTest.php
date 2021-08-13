@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\entity_reference_override\FunctionalJavascript;
 
+use Drupal\Core\Entity\Entity\EntityFormMode;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\entity_test\Entity\EntityTestMul;
 use Drupal\field\Entity\FieldConfig;
@@ -70,7 +71,12 @@ class FormTest extends WebDriverTestBase {
     $display_repository = \Drupal::service('entity_display.repository');
 
     $display_repository->getFormDisplay($entity_type, $entity_type, 'default')
-      ->setComponent($field_name)
+      ->setComponent($field_name, [
+        'type' => 'entity_reference_override_autocomplete',
+        'settings' => [
+          'form_mode' => 'overwrite',
+        ],
+      ])
       ->save();
 
     $display_repository->getViewDisplay($entity_type, $entity_type)
@@ -97,7 +103,13 @@ class FormTest extends WebDriverTestBase {
       ->setComponent($field_name)
       ->save();
 
-    $display_repository->getFormDisplay($entity_type, $entity_type)
+    EntityFormMode::create([
+      'id' => $entity_type . '.overwrite',
+      'label' => 'Overwrite',
+      'targetEntityType' => $entity_type,
+    ])->save();
+
+    $display_repository->getFormDisplay($entity_type, $entity_type, 'overwrite')
       ->setComponent($field_name)
       ->save();
   }
