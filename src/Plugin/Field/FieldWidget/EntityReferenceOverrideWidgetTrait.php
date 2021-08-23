@@ -184,6 +184,7 @@ trait EntityReferenceOverrideWidgetTrait {
       '%label' => $entity->label(),
     ]);
 
+    $limit_validation_errors = [array_merge($parents, [$field_name])];
     $element['edit'] = [
       '#type' => 'button',
       '#name' => $field_name . '-' . $delta . '-entity-reference-override-edit-button' . $id_suffix,
@@ -208,6 +209,9 @@ trait EntityReferenceOverrideWidgetTrait {
           'core/drupal.dialog.ajax',
         ],
       ],
+      // Allow the override modal to be opened and saved even if there are form
+      // errors for other fields.
+      '#limit_validation_errors' => $limit_validation_errors,
     ];
 
     // The hidden update button functionality was inspired by the media library.
@@ -225,6 +229,8 @@ trait EntityReferenceOverrideWidgetTrait {
         'data-entity-reference-override-update' => $field_widget_id,
       ],
       '#submit' => [[static::class, 'updateOverrideFieldState']],
+      // Ensure only the validation for this submit runs.
+      '#limit_validation_errors' => $limit_validation_errors,
     ];
 
     return $element;
