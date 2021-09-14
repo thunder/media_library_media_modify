@@ -1,26 +1,26 @@
 <?php
 
-namespace Drupal\entity_reference_override\Commands;
+namespace Drupal\media_library_media_modify\Commands;
 
 use Drush\Commands\DrushCommands;
-use Drupal\entity_reference_override\EntityReferenceOverrideService;
+use Drupal\media_library_media_modify\EntityReferenceOverrideService;
 
 /**
- * Drush commands for entity_reference_override.
+ * Drush commands for media_library_media_modify.
  */
 class MigrateCommands extends DrushCommands {
 
   /**
    * The entity reference override service.
    *
-   * @var \Drupal\entity_reference_override\EntityReferenceOverrideService
+   * @var \Drupal\media_library_media_modify\EntityReferenceOverrideService
    */
   protected $entityReferenceOverrideService;
 
   /**
    * Constructor.
    *
-   * @param \Drupal\entity_reference_override\EntityReferenceOverrideService $entityReferenceOverrideService
+   * @param \Drupal\media_library_media_modify\EntityReferenceOverrideService $entityReferenceOverrideService
    *   The entity reference override service.
    */
   public function __construct(EntityReferenceOverrideService $entityReferenceOverrideService) {
@@ -29,17 +29,17 @@ class MigrateCommands extends DrushCommands {
   }
 
   /**
-   * Migrates an entity_reference field to entity_reference_override.
+   * Migrates an entity_reference field to media_library_media_modify.
    *
    * @param string $entity_type_id
    *   The entity type ID.
    * @param string $field_name
    *   The field name.
    *
-   * @command entity_reference_override:migrate
+   * @command media_library_media_modify:migrate
    *
-   * @usage drush entity_reference_override:migrate
-   *   Migrates an entity_reference field to entity_reference_override.
+   * @usage drush media_library_media_modify:migrate
+   *   Migrates an entity_reference field to media_library_media_modify.
    */
   public function migrate($entity_type_id, $field_name) {
 

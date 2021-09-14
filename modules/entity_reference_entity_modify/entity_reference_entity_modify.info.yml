@@ -1,0 +1,10 @@
+name: Entity Reference Entity Modify
+description: 'Stores entity reference entity modifications regardless of referenced type.'
+type: module
+package: User interface
+experimental: true
+core_version_requirement: ^8.9 || ^9
+dependencies:
+  - media_library_media_modify:media_library_media_modify
+test_dependencies:
+  - inline_entity_form:inline_entity_form

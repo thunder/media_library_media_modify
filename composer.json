@@ -1,5 +1,5 @@
 {
-    "name": "drupal/entity_reference_override",
+    "name": "drupal/media_library_media_modify",
     "description": "Store context specific overrides for entity reference fields.",
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",

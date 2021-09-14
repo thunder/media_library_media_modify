@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\entity_reference_override\Form;
+namespace Drupal\media_library_media_modify\Form;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Access\AccessResult;
@@ -20,7 +20,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\entity_reference_override\EntityReferenceOverrideService;
+use Drupal\media_library_media_modify\EntityReferenceOverrideService;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\PrivateKey;
@@ -28,7 +28,7 @@ use Drupal\Core\PrivateKey;
 /**
  * Implements an example form.
  */
-class OverrideEntityForm extends FormBase {
+class ModifyEntityForm extends FormBase {
 
   /**
    * The entity display repository service.
@@ -61,7 +61,7 @@ class OverrideEntityForm extends FormBase {
   /**
    * The entity reference override service.
    *
-   * @var \Drupal\entity_reference_override\EntityReferenceOverrideService
+   * @var \Drupal\media_library_media_modify\EntityReferenceOverrideService
    */
   protected $entityReferenceOverrideService;
 
@@ -81,7 +81,7 @@ class OverrideEntityForm extends FormBase {
     $form->setPrivateTempStore($container->get('tempstore.private'));
     $form->setEntityTypeManager($container->get('entity_type.manager'));
     $form->setEntityFieldManager($container->get('entity_field.manager'));
-    $form->setEntityReferenceOverrideService($container->get('entity_reference_override'));
+    $form->setEntityReferenceOverrideService($container->get('media_library_media_modify'));
     $form->setPrivateKey($container->get('private_key'));
     return $form;
   }
@@ -103,7 +103,7 @@ class OverrideEntityForm extends FormBase {
    *   The temp store service.
    */
   protected function setPrivateTempStore(PrivateTempStoreFactory $privateTempStoreFactory) {
-    $this->tempStore = $privateTempStoreFactory->get('entity_reference_override');
+    $this->tempStore = $privateTempStoreFactory->get('media_library_media_modify');
   }
 
   /**
@@ -129,7 +129,7 @@ class OverrideEntityForm extends FormBase {
   /**
    * Set the entity reference override service.
    *
-   * @param \Drupal\entity_reference_override\EntityReferenceOverrideService $entityReferenceOverrideService
+   * @param \Drupal\media_library_media_modify\EntityReferenceOverrideService $entityReferenceOverrideService
    *   The entity reference override service.
    */
   protected function setEntityReferenceOverrideService(EntityReferenceOverrideService $entityReferenceOverrideService) {
@@ -170,7 +170,7 @@ class OverrideEntityForm extends FormBase {
     $form_mode = $store_entry['form_mode'];
     $referencing_entity_type_id = $store_entry['referencing_entity_type_id'];
 
-    $form['#attached']['library'][] = 'entity_reference_override/form';
+    $form['#attached']['library'][] = 'media_library_media_modify/form';
 
     // @todo Remove the ID when we can use selectors to replace content via
     //   AJAX in https://www.drupal.org/project/drupal/issues/2821793.
@@ -213,7 +213,7 @@ class OverrideEntityForm extends FormBase {
       '#button_type' => 'primary',
       '#ajax' => [
         'callback' => '::ajaxSubmit',
-        'url' => Url::fromRoute('entity_reference_override.form'),
+        'url' => Url::fromRoute('media_library_media_modify.form'),
         'options' => [
           'query' => $this->getRequest()->query->all() + [
             'hash' => $hash,
@@ -265,7 +265,7 @@ class OverrideEntityForm extends FormBase {
   public static function access(AccountInterface $account) {
     $hash = \Drupal::request()->query->get('hash');
     /** @var \Drupal\Core\TempStore\PrivateTempStore $temp_store */
-    $temp_store = \Drupal::service('tempstore.private')->get('entity_reference_override');
+    $temp_store = \Drupal::service('tempstore.private')->get('media_library_media_modify');
     if (!($store_entry = $temp_store->get($hash))) {
       return AccessResult::forbidden();
     }

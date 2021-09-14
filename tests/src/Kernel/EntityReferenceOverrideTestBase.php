@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\Kernel;
+namespace Drupal\Tests\media_library_media_modify\Kernel;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\KernelTests\KernelTestBase;
+use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 
 /**
  * Base class for kernel tests.
  */
-class EntityReferenceOverrideTestBase extends KernelTestBase {
+class EntityReferenceOverrideTestBase extends MediaKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -20,7 +20,7 @@ class EntityReferenceOverrideTestBase extends KernelTestBase {
     'field',
     'entity_test',
     'text',
-    'entity_reference_override',
+    'media_library_media_modify',
   ];
 
   /**
@@ -36,11 +36,11 @@ class EntityReferenceOverrideTestBase extends KernelTestBase {
     $entity_type = 'entity_test';
     FieldStorageConfig::create([
       'field_name' => $field_name,
-      'type' => 'entity_reference_override',
+      'type' => 'entity_reference_entity_modify',
       'entity_type' => $entity_type,
       'cardinality' => -1,
       'settings' => [
-        'target_type' => 'entity_test_mul',
+        'target_type' => 'media',
       ],
     ])->save();
 

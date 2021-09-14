@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\FunctionalJavascript;
+namespace Drupal\Tests\media_library_media_modify\FunctionalJavascript;
 
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
@@ -21,7 +21,7 @@ class EntityReferenceOverrideTestBase extends WebDriverTestBase {
     'field',
     'entity_test',
     'text',
-    'entity_reference_override',
+    'media_library_media_modify',
   ];
 
   /**
@@ -30,7 +30,7 @@ class EntityReferenceOverrideTestBase extends WebDriverTestBase {
   protected $defaultTheme = 'stark';
 
   /**
-   * Create an entity_reference_override field.
+   * Create an entity_reference_entity_modify field.
    *
    * @param string $entity_type
    *   The entity type id.
@@ -47,7 +47,7 @@ class EntityReferenceOverrideTestBase extends WebDriverTestBase {
 
     FieldStorageConfig::create([
       'field_name' => $field_name,
-      'type' => 'entity_reference_override',
+      'type' => 'entity_reference_entity_modify',
       'entity_type' => $entity_type,
       'cardinality' => -1,
       'settings' => [

@@ -1,6 +1,6 @@
 services:
-  entity_reference_override_migrate.commands:
-    class: Drupal\entity_reference_override\Commands\MigrateCommands
-    arguments: ['@entity_reference_override']
+  media_library_media_modify_migrate.commands:
+    class: Drupal\media_library_media_modify\Commands\MigrateCommands
+    arguments: ['@media_library_media_modify']
     tags:
       - { name: drush.command }

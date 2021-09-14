@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\FunctionalJavascript;
+namespace Drupal\Tests\media_library_media_modify\FunctionalJavascript;
 
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\FunctionalJavascriptTests\SortableTestTrait;
@@ -40,7 +40,7 @@ class MediaLibraryWithOverrideWidgetTest extends EntityReferenceOverrideTestBase
     parent::setUp();
 
     $mediaType = $this->createMediaType('image');
-    $this->addReferenceOverrideField('entity_test', 'field_reference_override', 'media', $mediaType->id(), 'media_library_with_override_widget');
+    $this->addReferenceOverrideField('entity_test', 'field_reference_override', 'media', $mediaType->id(), 'media_library_media_modify_widget');
 
     $this->entity = EntityTest::create();
     $this->entity->save();

@@ -1,0 +1,7 @@
+field.widget.settings.entity_reference_autocomplete_with_override:
+  type: field.widget.settings.entity_reference_autocomplete
+  label: 'Entity reference override autocomplete display format settings'
+  mapping:
+    form_mode:
+      type: string
+      label: 'Form mode'

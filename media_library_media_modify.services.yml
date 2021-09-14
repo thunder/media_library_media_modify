@@ -1,4 +1,6 @@
 services:
-  entity_reference_override:
+  # @todo Move to entity_reference_entity_modify when it is no longer
+  #   experimental.
+  media_library_media_modify:
     arguments: [ '@database', '@config.factory', '@keyvalue', '@entity_field.manager', '@entity.last_installed_schema.repository', '@entity_display.repository', '@plugin.manager.field.widget', '@entity_type.manager']
-    class: Drupal\entity_reference_override\EntityReferenceOverrideService
+    class: Drupal\media_library_media_modify\EntityReferenceOverrideService

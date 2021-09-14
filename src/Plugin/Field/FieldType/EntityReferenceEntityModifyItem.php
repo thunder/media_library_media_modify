@@ -1,28 +1,51 @@
 <?php
 
-namespace Drupal\entity_reference_override\Plugin\Field\FieldType;
+namespace Drupal\media_library_media_modify\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Plugin implementation of the 'entity_reference_override' field type.
+ * Plugin implementation of the 'entity_reference_entity_modify' field type.
  *
  * @FieldType(
- *   id = "entity_reference_override",
- *   label = @Translation("Entity reference override"),
- *   description = @Translation("An entity field containing an entity reference and additional data."),
+ *   id = "entity_reference_entity_modify",
+ *   label = @Translation("Media with contextual modifications"),
+ *   description = @Translation("An media field containing a media reference and additional data."),
  *   category = @Translation("Reference"),
- *   default_widget = "entity_reference_autocomplete_with_override",
- *   default_formatter = "entity_reference_label",
+ *   default_widget = "media_library_media_modify_widget",
+ *   default_formatter = "entity_reference_entity_view",
  *   list_class = "\Drupal\Core\Field\EntityReferenceFieldItemList"
  * )
  */
-class EntityReferenceOverrideItem extends EntityReferenceItem {
+class EntityReferenceEntityModifyItem extends EntityReferenceItem {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultStorageSettings() {
+    return [
+      'target_type' => 'media',
+    ] + parent::defaultStorageSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
+    // This can only be used for media fields.
+    $element['target_type'] = [
+      '#type' => 'hidden',
+      '#value' => 'media',
+    ];
+
+    return $element;
+  }
 
   /**
    * {@inheritdoc}
@@ -99,7 +122,7 @@ class EntityReferenceOverrideItem extends EntityReferenceItem {
     }
     if ($overwritten_property_map) {
       $entity->addCacheableDependency($this->getEntity());
-      $entity->entity_reference_override = sprintf('%s:%s.%s', $this->getEntity()->getEntityTypeId(), $this->getEntity()->bundle(), $this->getPropertyPath());
+      $entity->entity_reference_entity_modify = sprintf('%s:%s.%s', $this->getEntity()->getEntityTypeId(), $this->getEntity()->bundle(), $this->getPropertyPath());
     }
   }
 

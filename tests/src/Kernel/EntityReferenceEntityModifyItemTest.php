@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\Kernel;
+namespace Drupal\Tests\media_library_media_modify\Kernel;
 
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
@@ -13,21 +13,21 @@ use Drupal\Component\Serialization\Json;
  *
  * @group media
  */
-class EntityReferenceOverrideItemTest extends MediaKernelTestBase {
+class EntityReferenceEntityModifyItemTest extends MediaKernelTestBase {
 
   /**
    * Type of the reference field.
    *
    * @var string
    */
-  protected $fieldType = 'entity_reference_override';
+  protected $fieldType = 'entity_reference_entity_modify';
 
   /**
    * {@inheritdoc}
    */
   protected static $modules = [
     'entity_test',
-    'entity_reference_override',
+    'media_library_media_modify',
   ];
 
   /**

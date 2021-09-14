@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\Kernel;
+namespace Drupal\Tests\media_library_media_modify\Kernel;
 
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\entity_test\Entity\EntityTestMul;
@@ -28,7 +28,7 @@ class TranslationTest extends EntityReferenceOverrideTestBase {
     parent::setUp();
 
     $field_name = 'field_description';
-    $entity_type = 'entity_test_mul';
+    $entity_type = 'media';
     FieldStorageConfig::create([
       'field_name' => $field_name,
       'type' => 'text_long',
@@ -39,7 +39,7 @@ class TranslationTest extends EntityReferenceOverrideTestBase {
     FieldConfig::create([
       'field_name' => $field_name,
       'entity_type' => $entity_type,
-      'bundle' => $entity_type,
+      'bundle' => $this->testMediaType->id(),
       'label' => $field_name,
     ])->save();
 
@@ -55,10 +55,8 @@ class TranslationTest extends EntityReferenceOverrideTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testTranslatableParentWithUntranslatableReference() {
-    $referenced_entity = EntityTestMul::create([
-      'name' => 'Referenced entity',
-      'field_description' => 'Main description',
-    ]);
+    $referenced_entity = $this->generateMedia('test.txt', $this->testMediaType);
+    $referenced_entity->field_description = 'Main description';
     $referenced_entity->save();
 
     // Create english parent entity.
@@ -97,12 +95,11 @@ class TranslationTest extends EntityReferenceOverrideTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testTranslatableParentWithTranslatableReference() {
-    $referenced_entity = EntityTestMul::create([
-      'name' => 'Referenced entity',
-      'field_description' => 'Main english description',
-      'langcode' => 'en',
-    ]);
+    $referenced_entity = $this->generateMedia('test.txt', $this->testMediaType);
+    $referenced_entity->field_description = 'Main english description';
+    $referenced_entity->langcode = 'en';
     $referenced_entity->save();
+
     $translation = $referenced_entity->addTranslation('de', $referenced_entity->toArray());
     $translation->field_description = 'Main german description';
     $translation->save();

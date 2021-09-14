@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\Kernel;
+namespace Drupal\Tests\media_library_media_modify\Kernel;
 
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\KernelTests\KernelTestBase;
@@ -22,7 +22,7 @@ class EntityReferenceOverrideServiceTest extends KernelTestBase {
     'user',
     'field',
     'entity_test',
-    'entity_reference_override',
+    'media_library_media_modify',
   ];
 
   /**
@@ -30,7 +30,7 @@ class EntityReferenceOverrideServiceTest extends KernelTestBase {
    *
    * @dataProvider getOverriddenValuesProvider
    *
-   * @covers \Drupal\entity_reference_override\EntityReferenceOverrideService::getOverriddenValues
+   * @covers \Drupal\media_library_media_modify\EntityReferenceOverrideService::getOverriddenValues
    */
   public function testGetOverriddenValues($field_type, $referenced_entity_value, $original_entity_value, $expected) {
 
@@ -57,8 +57,8 @@ class EntityReferenceOverrideServiceTest extends KernelTestBase {
       'field_test' => $original_entity_value,
     ]);
 
-    /** @var \Drupal\entity_reference_override\EntityReferenceOverrideService $service */
-    $service = \Drupal::service('entity_reference_override');
+    /** @var \Drupal\media_library_media_modify\EntityReferenceOverrideService $service */
+    $service = \Drupal::service('media_library_media_modify');
 
     $this->assertEquals($expected, $service->getOverriddenValues($referenced_entity, $original_entity, ['field_test']));
   }

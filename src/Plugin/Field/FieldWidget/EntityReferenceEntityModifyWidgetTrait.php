@@ -1,20 +1,20 @@
 <?php
 
-namespace Drupal\entity_reference_override\Plugin\Field\FieldWidget;
+namespace Drupal\media_library_media_modify\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\entity_reference_override\Form\OverrideEntityForm;
+use Drupal\media_library_media_modify\Form\ModifyEntityForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Ajax\MessageCommand;
 
 /**
- * Trait for widgets with entity_reference_override functionality.
+ * Trait for widgets for the 'entity_reference_entity_modify' field type.
  */
-trait EntityReferenceOverrideWidgetTrait {
+trait EntityReferenceEntityModifyWidgetTrait {
 
   /**
    * The entity display repository service.
@@ -147,7 +147,7 @@ trait EntityReferenceOverrideWidgetTrait {
       // Allow the override modal to be opened and saved even if there are form
       // errors for other fields.
       '#limit_validation_errors' => [array_merge($parents, [$field_name])],
-      '#entity_reference_override' => [
+      '#media_library_media_modify' => [
         'referenced_entity' => $referenced_entity,
         'form_mode' => $this->getSetting('form_mode'),
         'field_widget_id' => $field_widget_id,
@@ -172,10 +172,10 @@ trait EntityReferenceOverrideWidgetTrait {
    */
   public static function openOverrideForm(array $form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
-    $override_form = \Drupal::formBuilder()->getForm(OverrideEntityForm::class, $button['#entity_reference_override']);
+    $override_form = \Drupal::formBuilder()->getForm(ModifyEntityForm::class, $button['#media_library_media_modify']);
     $dialog_options = static::overrideFormDialogOptions();
 
-    if (!OverrideEntityForm::access(\Drupal::currentUser())) {
+    if (!ModifyEntityForm::access(\Drupal::currentUser())) {
       return (new AjaxResponse())
         ->addCommand(new MessageCommand(t("You don't have access to set overrides for this item."), NULL, ['type' => 'warning']));
     }

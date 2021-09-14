@@ -1,12 +1,13 @@
 <?php
 
-namespace Drupal\Tests\entity_reference_override\FunctionalJavascript;
+namespace Drupal\Tests\entity_reference_entity_modify\FunctionalJavascript;
 
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\entity_test\Entity\EntityTestMul;
 use Drupal\entity_test\Entity\EntityTestRev;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Tests\media_library_media_modify\FunctionalJavascript\EntityReferenceOverrideTestBase;
 
 /**
  * Form operation tests.
@@ -18,6 +19,7 @@ class FormTest extends EntityReferenceOverrideTestBase {
    */
   protected static $modules = [
     'inline_entity_form',
+    'entity_reference_entity_modify',
   ];
 
   /**

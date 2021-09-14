@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\entity_reference_override;
+namespace Drupal\media_library_media_modify;
 
 use Drupal\Component\Utility\DiffArray;
 use Drupal\Component\Utility\NestedArray;
@@ -109,7 +109,7 @@ class EntityReferenceOverrideService {
   }
 
   /**
-   * Migrates an entity_reference field to entity_reference_override.
+   * Migrates an entity_reference field to entity_reference_entity_modify field.
    *
    * @param string $entity_type_id
    *   The entity type ID.
@@ -123,7 +123,7 @@ class EntityReferenceOverrideService {
       throw new \Exception('Not an entity reference field');
     }
 
-    /* @see \Drupal\entity_reference_override\Plugin\Field\FieldType\EntityReferenceOverrideItem::schema() */
+    /* @see \Drupal\media_library_media_modify\Plugin\Field\FieldType\EntityReferenceEntityModifyItem::schema() */
     $schema_spec = [
       'description' => 'A map to overwrite entity data per instance.',
       'type' => 'text',
@@ -146,23 +146,23 @@ class EntityReferenceOverrideService {
     $store->set("$entity_type_id.field_schema_data.$field_name", $data);
 
     $schema_definitions = $this->entityLastInstalledSchemaRepository->getLastInstalledFieldStorageDefinitions($entity_type_id);
-    $schema_definitions[$field_name]->set('type', 'entity_reference_override');
+    $schema_definitions[$field_name]->set('type', 'entity_reference_entity_modify');
     $this->entityLastInstalledSchemaRepository->setLastInstalledFieldStorageDefinitions($entity_type_id, $schema_definitions);
 
     $this->entityFieldManager->clearCachedFieldDefinitions();
 
-    $field_storage_config->set('type', 'entity_reference_override');
+    $field_storage_config->set('type', 'entity_reference_entity_modify');
     $field_storage_config->save(TRUE);
 
     FieldStorageConfig::loadByName($entity_type_id, $field_name)->calculateDependencies()->save();
 
     // Use the default widget and settings.
-    $component = $this->widgetPluginManager->prepareConfiguration('entity_reference_override', []);
+    $component = $this->widgetPluginManager->prepareConfiguration('entity_reference_entity_modify', []);
 
     $field_map = $this->entityFieldManager->getFieldMapByFieldType('entity_reference')[$entity_type_id][$field_name];
     foreach ($field_map['bundles'] as $bundle) {
       $field_config = $this->configFactory->getEditable("field.field.$entity_type_id.$bundle.$field_name");
-      $field_config->set('field_type', 'entity_reference_override');
+      $field_config->set('field_type', 'entity_reference_entity_modify');
       $field_config->save();
 
       FieldConfig::loadByName($entity_type_id, $bundle, $field_name)->calculateDependencies()->save(TRUE);

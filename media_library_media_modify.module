@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * The media_library_media_modify hook implementations.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\media_library_media_modify\Exception\ReadOnlyEntityException;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * @todo Move to entity_reference_entity_modify when it is no longer
+ *   experimental.
+ */
+function media_library_media_modify_entity_presave(EntityInterface $entity) {
+  if (isset($entity->entity_reference_entity_modify)) {
+    throw new ReadOnlyEntityException(sprintf('The entity (ID: %s, entity_type: %s) is overridden and not allowed to be saved.', $entity->id(), $entity->getEntityTypeId()));
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ *
+ * @todo Move to entity_reference_entity_modify when it is no longer
+ *   experimental.
+ */
+function media_library_media_modify_field_formatter_info_alter(array &$info) {
+  foreach ($info as $formatter_id => $formatter) {
+    if (in_array('entity_reference', $formatter['field_types'])) {
+      $info[$formatter_id]['field_types'][] = 'entity_reference_entity_modify';
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_build_defaults_alter().
+ *
+ * @todo Move to entity_reference_entity_modify when it is no longer
+ *   experimental.
+ */
+function media_library_media_modify_entity_build_defaults_alter(array &$build, EntityInterface $entity, $view_mode) {
+  if (isset($entity->entity_reference_entity_modify)) {
+    $build['#cache']['keys'][] = 'entity_reference_entity_modify:' . $entity->entity_reference_entity_modify;
+  }
+}

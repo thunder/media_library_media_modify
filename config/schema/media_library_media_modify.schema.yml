@@ -1,0 +1,19 @@
+field.widget.settings.media_library_media_modify_widget:
+  type: field.widget.settings.media_library_widget
+  label: 'Media library with override widget settings'
+  mapping:
+    form_mode:
+      type: string
+      label: 'Form mode'
+
+# @todo Move to entity_reference_entity_modify when it is no longer
+#   experimental.
+field.storage_settings.entity_reference_entity_modify:
+  type: base_entity_reference_field_settings
+  label: 'Entity reference override field storage settings'
+
+# @todo Move to entity_reference_entity_modify when it is no longer
+#   experimental.
+field.field_settings.entity_reference_entity_modify:
+  type: field.field_settings.entity_reference
+  label: 'Entity reference override field settings'
